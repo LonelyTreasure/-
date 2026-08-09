@@ -42,9 +42,7 @@ try {
     
     var modifiedBody = JSON.stringify(obj);
     $done({ body: modifiedBody });
-    console.log("[VIP Unlock] ✅ 注入成功: " + url);
     
 } catch (e) {
-    console.log("[VIP Unlock] ⏭️ 跳过: " + url);
     $done({});
 }
