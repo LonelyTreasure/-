@@ -38,7 +38,7 @@ try {
     obj.vip_status = true;
     obj.is_vip = true;
     obj.vip_level = 3;
-    obj.vip_time = "2099-12-31T23:59:59.000Z";
+    obj.vip_time = "2035-12-31T23:59:59.000Z";
     
     var modifiedBody = JSON.stringify(obj);
     $done({ body: modifiedBody });
