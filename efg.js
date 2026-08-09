@@ -24,7 +24,7 @@ try {
             }
             
             if (timeKeys.indexOf(key) !== -1) {
-                target[key] = "2099-12-31T23:59:59.000Z";
+                target[key] = "2035-12-31T23:59:59.000Z";
             }
             
             if (typeof value === "object" && value !== null) {
