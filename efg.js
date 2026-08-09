@@ -17,7 +17,7 @@ try {
                 if (typeof value === "boolean") {
                     target[key] = true;
                 } else if (typeof value === "number") {
-                    target[key] = 3;
+                    target[key] = 4;
                 } else if (typeof value === "string" && value === "0") {
                     target[key] = "1";
                 }
@@ -37,7 +37,7 @@ try {
     
     obj.vip_status = true;
     obj.is_vip = true;
-    obj.vip_level = 3;
+    obj.vip_level = 4;
     obj.vip_time = "2035-12-31T23:59:59.000Z";
     
     var modifiedBody = JSON.stringify(obj);
