@@ -1,4 +1,5 @@
 var body = $response.body;
+var url = $request.url;
 
 try {
     var obj = JSON.parse(body);
@@ -28,6 +29,21 @@ try {
     obj.is_vip = true;
     obj.vip_level = 3;
     obj.vip_time = "2099-12-31T23:59:59.000Z";
+    
+    // ========== 欧路词典 (api.esdict.cn) 特化修改 ==========
+    if (url.indexOf("api.esdict.cn") !== -1) {
+        if (obj.data) {
+            obj.data.balance = 99999;
+            obj.data.transvip = true;
+            obj.data.transvip_endtime = "2099-12-31T23:59:59.000Z";
+            if (obj.data.tingvip) {
+                obj.data.tingvip.istingvip = true;
+                obj.data.tingvip.tingvipendtime = "2099-12-31T23:59:59.000Z";
+                obj.data.tingvip.tingviptype = "vip";
+            }
+        }
+    }
+    // ===================================================
     
     $done({ body: JSON.stringify(obj) });
 } catch (e) {
