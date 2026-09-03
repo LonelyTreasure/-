@@ -11,7 +11,7 @@ try {
             var value = target[key];
             if (vipKeys.indexOf(key) !== -1) {
                 if (typeof value === "boolean") target[key] = true;
-                else if (typeof value === "number") target[key] = 3;
+                else if (typeof value === "number") target[key] = 5;
                 else if (typeof value === "string" && value === "0") target[key] = "1";
             }
             if (timeKeys.indexOf(key) !== -1) {
@@ -26,7 +26,7 @@ try {
     deepInject(obj);
     obj.vip_status = true;
     obj.is_vip = true;
-    obj.vip_level = 3;
+    obj.vip_level = 5;
     obj.vip_time = "2099-12-31T23:59:59.000Z";
     
     $done({ body: JSON.stringify(obj) });
