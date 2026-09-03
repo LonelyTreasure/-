@@ -12,7 +12,7 @@ try {
             if (vipKeys.indexOf(key) !== -1) {
                 if (typeof value === "boolean") target[key] = true;
                 else if (typeof value === "number") target[key] = 5;
-                else if (typeof value === "string" && value === "0") target[key] = "1";
+                else if (typeof value === "string") target[key] = "5"; // 字符串也改
             }
             if (timeKeys.indexOf(key) !== -1) {
                 target[key] = "2099-12-31T23:59:59.000Z";
@@ -24,6 +24,8 @@ try {
     }
     
     deepInject(obj);
+    
+    // 额外强制覆盖（确保外层也有）
     obj.vip_status = true;
     obj.is_vip = true;
     obj.vip_level = 5;
