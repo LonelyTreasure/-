@@ -1,6 +1,12 @@
 var body = $response.body;
 var url = $request.url;
 
+function notify(title, subtitle, message) {
+    if (typeof $notify !== "undefined") {
+        $notify(title, subtitle, message);
+    }
+}
+
 try {
     var obj = JSON.parse(body);
     var changed = [];
@@ -46,12 +52,10 @@ try {
     obj.vip_level = 3;
     obj.vip_time = "2099-12-31T23:59:59.000Z";
 
-    console.log("[VIP] ✅ " + url);
-    console.log("[VIP] 修改字段: " + changed.join(","));
-    console.log("[VIP] 修改后: " + JSON.stringify(obj).substring(0, 300));
+    notify("✅ VIP 注入成功", url.split("?")[0], "修改: " + changed.join(","));
 
     $done({ body: JSON.stringify(obj) });
 } catch (e) {
-    console.log("[VIP] ❌ 失败: " + e.message);
+    notify("❌ 注入失败", url.split("?")[0], e.message);
     $done({});
 }
