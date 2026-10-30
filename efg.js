@@ -1,66 +1,35 @@
-var body = $response.body;
-var url = $request.url;
+var fakeBody = `{
+  "isLoggedIn": true,
+  "session": {
+    "token": "eyJ2IjoxLCJ1c2VySWQiOiIxMzI3MSIsImRldmljZUlkIjoiREFCRUJBRDYtMzkwNi00QUJCLUI2MzAtQURBQ0Y2QUFBQkY0IiwiaXNzdWVkQXQiOjE3OTMzODAxMDEyMTIsImV4cGlyZXNBdCI6MTgwMTE1NjEwMTIxMiwibm9uY2UiOiI5OTY4YzIwNmVhMjlkOTM3NTNkZjEyNmIwNTA3ODM5NSJ9.KABnRyk0hKEg37LH2bE0UV8k2N4PSs7ilvOKDFJGyAg",
+    "userId": "13271",
+    "deviceId": "DABEBAD6-3906-4ABB-B630-ADACF6AAABF4",
+    "expiresAt": 1801156101212
+  },
+  "user": {
+    "id": 13271,
+    "username": "LonelyTreasure",
+    "email": "2012379431@qq.com",
+    "email_verified_at": "2026-06-17T06:45:15.000Z",
+    "nickname": null,
+    "avatar_base64": null,
+    "signature": null,
+    "activated_card_code": null,
+    "created_at": "2026-06-17T03:03:34.000Z",
+    "vip_status": true,
+    "vip_time": "2099-12-31T23:59:59.000Z",
+    "max_devices": 1,
+    "device_ids": "DABEBAD6-3906-4ABB-B630-ADACF6AAABF4",
+    "isPC": false
+  },
+  "vip_info": {
+    "vip_status": true,
+    "vip_time": "2099-12-31T23:59:59.000Z",
+    "device_count": 1,
+    "max_devices": 1
+  },
+  "message": "用户已登录"
+}`;
 
-console.log("[VIP] 触发: " + url);
-
-try {
-    var obj = JSON.parse(body);
-    var changed = [];
-
-    var vipKeys = ['vip_status', 'is_vip', 'isVip', 'vip', 'member', 'level', 'role', 'vip_level', 'member_level', 'user_level', 'premium', 'isPremium', 'is_pro', 'isPro'];
-    var timeKeys = ['vip_time', 'vip_expire', 'expire_time', 'expireAt', 'vip_expire_at', 'member_expire', 'expireDate'];
-
-    function deepInject(target) {
-        if (!target || typeof target !== "object") return;
-        for (var key in target) {
-            var value = target[key];
-            if (vipKeys.indexOf(key) !== -1) {
-                if (typeof value === "boolean") {
-                    target[key] = true;
-                    changed.push(key);
-                } else if (typeof value === "number") {
-                    target[key] = 3;
-                    changed.push(key);
-                } else if (typeof value === "string") {
-                    target[key] = "1";
-                    changed.push(key);
-                }
-            }
-            if (timeKeys.indexOf(key) !== -1) {
-                target[key] = "2099-12-31T23:59:59.000Z";
-                changed.push(key);
-            }
-            if (typeof value === "object" && value !== null) {
-                deepInject(value);
-            }
-        }
-    }
-
-    deepInject(obj);
-
-    if (obj.user) {
-        obj.user.vip_status = true;
-        obj.user.vip_time = "2099-12-31T23:59:59.000Z";
-    }
-    if (obj.vip_info) {
-        obj.vip_info.vip_status = true;
-        obj.vip_info.vip_time = "2099-12-31T23:59:59.000Z";
-    }
-    if (obj.data) {
-        obj.data.vip_status = true;
-        obj.data.vip_time = "2099-12-31T23:59:59.000Z";
-    }
-    obj.vip_status = true;
-    obj.is_vip = true;
-    obj.vip_level = 3;
-    obj.vip_time = "2099-12-31T23:59:59.000Z";
-
-    console.log("[VIP] 修改字段: " + (changed.length ? changed.join(", ") : "无"));
-    console.log("[VIP] 修改后: " + JSON.stringify(obj).substring(0, 300));
-
-    $done({ body: JSON.stringify(obj) });
-} catch (e) {
-    console.log("[VIP] 解析失败: " + e.message);
-    console.log("[VIP] 原始body: " + (body ? body.substring(0, 100) : "空"));
-    $done({});
-}
+console.log("[动听] 成功替换响应: " + $request.url);
+$done({ body: fakeBody });
